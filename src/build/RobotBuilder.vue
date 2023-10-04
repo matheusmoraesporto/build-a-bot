@@ -3,10 +3,10 @@
         <button class="add-to-cart" @click="addToCart()">Add to cart</button>
         <div class="top-row">
             <div class="top part">
-            <div class="robot-name">
-                {{ selectedRobot.head.title }}
-                <span v-if="selectedRobot.head.onSale" class="sale">Sale!</span>
-            </div>
+                <div class="robot-name">
+                    {{ selectedRobot.head.title }}
+                    <span v-if="selectedRobot.head.onSale" class="sale">Sale!</span>
+                </div>
                 <img :src="selectedRobot.head.imageUrl" alt="head" />
                 <button @click="selectPreviousHead()" class="prev-selector">&#9668;</button>
                 <button @click="selectNextHead()" class="next-selector">&#9658;</button>
@@ -59,6 +59,7 @@
 <script>
 import parts from '../data/parts';
 import toCurrency from '../shared/formatters';
+import createdHook from './created-hook-mixin';
 
 function getNextValidIndex(index, length) {
   const incrementedIndex = index + 1;
@@ -72,6 +73,7 @@ function getPreviousValidIndex(index, length) {
 
 export default {
   name: 'RobotBuilder',
+  mixins: [createdHook],
   data() {
     return {
       availableParts: parts,
@@ -267,7 +269,8 @@ export default {
     font-size: 16px;
 }
 
-td, th {
+td,
+th {
     text-align: left;
     padding: 5px;
     padding-right: 20px;
