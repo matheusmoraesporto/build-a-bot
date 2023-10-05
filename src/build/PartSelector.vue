@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, ref, onUpdated } from 'vue';
 
 const props = defineProps({
   parts: {
@@ -32,6 +32,9 @@ const selectedPart = computed(() => props.parts[selectedPartIndex.value]);
 // Need to emit the event when the component is created
 emit('partSelected', selectedPart);
 
+// With on update, emits the event always when selectedPartIndex is changed
+onUpdated(() => emit('partSelected', selectedPart));
+
 function getPreviousValidIndex(index, length) {
   const deprecatedIndex = index - 1;
   return deprecatedIndex < 0 ? length - 1 : deprecatedIndex;
@@ -44,12 +47,10 @@ function getNextValidIndex(index, length) {
 
 const selectNextPart = () => {
   selectedPartIndex.value = getNextValidIndex(selectedPartIndex.value, props.parts.length);
-  emit('partSelected', selectedPart);
 };
 
 const selectPreviousPart = () => {
   selectedPartIndex.value = getPreviousValidIndex(selectedPartIndex.value, props.parts.length);
-  emit('partSelected', selectedPart);
 };
 </script>
 
