@@ -47,35 +47,17 @@
         @partSelected="part => selectedRobot.base = part" />
     </div>
   </div>
-  <div>
-    <h1>Cart</h1>
-    <table>
-      <thead>
-        <tr>
-          <th>Robot</th>
-          <th class="cost">Cost</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(robot, index) in cart" :key="index">
-          <td>{{ robot.head.title }}</td>
-          <td class="cost">{{ toCurrency(robot.cost) }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
 </template>
 
 <script setup>
 import { computed, ref } from 'vue';
 import parts from '../data/parts';
-import toCurrency from '../shared/formatters';
 import PartSelector from './PartSelector.vue';
 import CollapsibleSection from '../shared/CollapsibleSection.vue';
+import useCartStore from '../stores/cartStore';
 
+const cartStore = useCartStore();
 const availableParts = parts;
-const cart = ref([]);
-
 const selectedRobot = ref({
   head: {}, leftArm: {}, rightArm: {}, torso: {}, base: {},
 });
@@ -85,7 +67,7 @@ const headBorderColor = computed(() => (selectedRobot.value.head.onSale ? 'red' 
 const addToCart = () => {
   const robot = selectedRobot.value;
   const cost = robot.head.cost + robot.leftArm.cost + robot.rightArm.cost + robot.torso.cost + robot.base.cost;
-  cart.value.push({ ...robot, cost });
+  cartStore.cart.push({ ...robot, cost });
 };
 </script>
 
