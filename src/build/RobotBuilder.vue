@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div class="content" v-if="partsStore.parts">
     <div class="preview">
       <CollapsibleSection>
         <div class="preview-content">
@@ -24,25 +24,25 @@
         <span v-if="selectedRobot.head.onSale" class="sale">Sale!</span>
       </div>
       <!-- position doesnt need a : because is a hardcoded(string) value -->
-      <PartSelector :parts="availableParts.heads" position="top" @partSelected="part => selectedRobot.head = part" />
+      <PartSelector :parts="partsStore.parts.heads" position="top" @partSelected="part => selectedRobot.head = part" />
     </div>
     <div class="middle-row">
       <PartSelector
-        :parts="availableParts.arms"
+        :parts="partsStore.parts.arms"
         position="left"
         @partSelected="part => selectedRobot.leftArm = part" />
       <PartSelector
-        :parts="availableParts.torsos"
+        :parts="partsStore.parts.torsos"
         position="center"
         @partSelected="part => selectedRobot.torso = part" />
       <PartSelector
-        :parts="availableParts.arms"
+        :parts="partsStore.parts.arms"
         position="right"
         @partSelected="part => selectedRobot.rightArm = part" />
     </div>
     <div class="bottom-row">
       <PartSelector
-        :parts="availableParts.bases"
+        :parts="partsStore.parts.bases"
         position="bottom"
         @partSelected="part => selectedRobot.base = part" />
     </div>
@@ -51,13 +51,16 @@
 
 <script setup>
 import { computed, ref } from 'vue';
-import parts from '../data/parts';
 import PartSelector from './PartSelector.vue';
 import CollapsibleSection from '../shared/CollapsibleSection.vue';
 import useCartStore from '../stores/cartStore';
+import usePartStore from '../stores/partsStore';
 
 const cartStore = useCartStore();
-const availableParts = parts;
+const partsStore = usePartStore();
+
+partsStore.getParts();
+
 const selectedRobot = ref({
   head: {}, leftArm: {}, rightArm: {}, torso: {}, base: {},
 });
