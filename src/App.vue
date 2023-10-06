@@ -8,6 +8,16 @@
             Build-a-bot
           </router-link>
         </li>
+        <li class="nav-item">
+          <router-link :to="{ name: 'Build' }" class="nav-link">
+            Build
+          </router-link>
+        </li>
+        <li class="nav-item">
+          <router-link :to="{ name: 'Search' }" class="nav-link">
+            Search
+          </router-link>
+        </li>
       </ul>
     </nav>
   </header>
@@ -67,5 +77,12 @@ ul {
 .logo {
   vertical-align: middle;
   height: 30px;
+}
+
+/* This class is controlled by vue, it adds to the main router
+  but it could be changed in the router with the property linkActiveClass
+ */
+.router-link-active {
+  color: white;
 }
 </style>
