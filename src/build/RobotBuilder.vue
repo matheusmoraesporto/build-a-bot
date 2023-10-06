@@ -16,7 +16,7 @@
           </div>
         </div>
       </CollapsibleSection>
-      <button class="add-to-cart" @click="addToCart()">Add to cart</button>
+      <button class="add-to-cart" @click="addToCart()" type="button">Add to cart</button>
     </div>
     <div class="top-row">
       <div class="robot-name">
