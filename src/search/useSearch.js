@@ -1,5 +1,5 @@
 import { computed, onMounted } from 'vue';
-import parts from '../../_course-resources/data/parts';
+import parts from '../data/parts';
 
 export default function useSearch(searchTerm) {
   const allParts = [...parts.heads, ...parts.arms, ...parts.torsos, ...parts.bases];
