@@ -1,61 +1,69 @@
 <template>
-    <div class="content">
-        <div class="preview">
-            <CollapsibleSection>
-                <div class="preview-content">
-                    <div class="top-row">
-                        <img :src="selectedRobot.head.imageUrl" alt="head" />
-                    </div>
-                    <div class="middle-row">
-                        <img :src="selectedRobot.leftArm.imageUrl" class="rotate-left" alt="rotate-left" />
-                        <img :src="selectedRobot.torso.imageUrl" alt="torso" />
-                        <img :src="selectedRobot.rightArm.imageUrl" class="rotate-right" alt="rotate-right" />
-                    </div>
-                    <div class="bottom-row">
-                        <img :src="selectedRobot.base.imageUrl" alt="base" />
-                    </div>
-                </div>
-            </CollapsibleSection>
-            <button class="add-to-cart" @click="addToCart()">Add to cart</button>
+  <div class="content">
+    <div class="preview">
+      <CollapsibleSection>
+        <div class="preview-content">
+          <div class="top-row">
+            <img :src="selectedRobot.head.imageUrl" alt="head" />
+          </div>
+          <div class="middle-row">
+            <img :src="selectedRobot.leftArm.imageUrl" class="rotate-left" alt="rotate-left" />
+            <img :src="selectedRobot.torso.imageUrl" alt="torso" />
+            <img :src="selectedRobot.rightArm.imageUrl" class="rotate-right" alt="rotate-right" />
+          </div>
+          <div class="bottom-row">
+            <img :src="selectedRobot.base.imageUrl" alt="base" />
+          </div>
         </div>
-        <div class="top-row">
-            <div class="robot-name">
-                {{ selectedRobot.head.title }}
-                <span v-if="selectedRobot.head.onSale" class="sale">Sale!</span>
-            </div>
-            <!-- position doesnt need a : because is a hardcoded(string) value -->
-            <PartSelector :parts="availableParts.heads" position="top" @partSelected="part => selectedRobot.head = part" />
-        </div>
-        <div class="middle-row">
-            <PartSelector :parts="availableParts.arms" position="left"
-                @partSelected="part => selectedRobot.leftArm = part" />
-            <PartSelector :parts="availableParts.torsos" position="center"
-                @partSelected="part => selectedRobot.torso = part" />
-            <PartSelector :parts="availableParts.arms" position="right"
-                @partSelected="part => selectedRobot.rightArm = part" />
-        </div>
-        <div class="bottom-row">
-            <PartSelector :parts="availableParts.bases" position="bottom"
-                @partSelected="part => selectedRobot.base = part" />
-        </div>
+      </CollapsibleSection>
+      <button class="add-to-cart" @click="addToCart()">Add to cart</button>
     </div>
-    <div>
-        <h1>Cart</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>Robot</th>
-                    <th class="cost">Cost</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="(robot, index) in cart" :key="index">
-                    <td>{{ robot.head.title }}</td>
-                    <td class="cost">{{ toCurrency(robot.cost) }}</td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="top-row">
+      <div class="robot-name">
+        {{ selectedRobot.head.title }}
+        <span v-if="selectedRobot.head.onSale" class="sale">Sale!</span>
+      </div>
+      <!-- position doesnt need a : because is a hardcoded(string) value -->
+      <PartSelector :parts="availableParts.heads" position="top" @partSelected="part => selectedRobot.head = part" />
     </div>
+    <div class="middle-row">
+      <PartSelector
+        :parts="availableParts.arms"
+        position="left"
+        @partSelected="part => selectedRobot.leftArm = part" />
+      <PartSelector
+        :parts="availableParts.torsos"
+        position="center"
+        @partSelected="part => selectedRobot.torso = part" />
+      <PartSelector
+        :parts="availableParts.arms"
+        position="right"
+        @partSelected="part => selectedRobot.rightArm = part" />
+    </div>
+    <div class="bottom-row">
+      <PartSelector
+        :parts="availableParts.bases"
+        position="bottom"
+        @partSelected="part => selectedRobot.base = part" />
+    </div>
+  </div>
+  <div>
+    <h1>Cart</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Robot</th>
+          <th class="cost">Cost</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(robot, index) in cart" :key="index">
+          <td>{{ robot.head.title }}</td>
+          <td class="cost">{{ toCurrency(robot.cost) }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </template>
 
 <script setup>
